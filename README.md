@@ -1,2 +1,10 @@
-# multivpn
-Little python script to spin up multiple docker containers that connect to NordVPN and act as proxies
+# MultiVPN
+A little Python script to spin up multiple Docker containers that establish an own OpenVPN connection each and act as proxies. It is compatible with the [gluetun](https://hub.docker.com/r/qmcgaw/gluetun) and [openvpn-proxy](https://hub.docker.com/r/jonoh/openvpn-proxy) Docker images. The script is designed to be used in a Linux distribution, e.g. Ubuntu. Obviously, Docker needs to be installed.
+
+In either way script is relying on OpenVPN to establish the VPN connection inside the container, so it's applicable for any VPN provider. However, the scripting around has a focus on NordVPN, which creates the need for some little tweaks so that it can be used with other providers as well.
+
+While Gluetun should be the much more powerful framework that is easier to set-up (it comes with most of the common VPN configurations built-in), it lacks of frequent updates which might cause problems with certain VPN providers (including NordVPN). For that reason the very simplistic openvpn-proxy Docker image is a good alternative. However, for the latter one you need to download and provide the OpenVPN configurations on your own. You can download the whole set of config files from their [NordCDN server](https://downloads.nordcdn.com/configs/archives/servers/ovpn.zip), which is just the CDN server of NordVPN (you can see it in a whois lookup). Alternatively, you can download individual server configurations from the official [Nord Account website](https://my.nordaccount.com/) after logging in and navigating to `NordVPN`-> `Advanced Settings` -> `Set up NordVPN manually` or by using this [direct link]([Set up NordVPN manually](https://my.nordaccount.com/dashboard/nordvpn/manual-configuration/openvpn/)).
+
+When running the script it will ask you for your OpenVPN username and passwor (which is not identical to your NordAccount credentials!). It will temporarily store those in a `.env` file, which will also be used if available. However, make sure to properly delete the file after using it to not expose your credentials.
+
+If you have the Chromium browser installed locally, the script offers the option to open one browser for each connection established with the proxy settings already pre-configured. You can provide a URL to automatically open using a terminal argument.
